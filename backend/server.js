@@ -1,4 +1,4 @@
-require('dotenv').config()
+require("dotenv").config();
 
 const express = require("express"),
   app = express(),
@@ -6,17 +6,21 @@ const express = require("express"),
   port = process.env.PORT || 5000,
   cors = require("cors"),
   authRoutes = require("./routes/auth"),
+  productRoutes = require("./routes/product"),
+  orderRoutes = require("./routes/order"),
   requireAuth = require("./middlewares/requireAuth"),
-  errorHandler = require("./middlewares/errors")
+  errorHandler = require("./middlewares/errors");
 
-app.use(bodyParser.urlencoded({extended: true}));          
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cors());
 app.use(authRoutes);
+app.use(productRoutes);
+app.use(orderRoutes);
 
-app.get('/',requireAuth,(req,res)=>{
-  res.json({message:`Welcome Back,${req.user.username}`})  
-})
+app.get("/", requireAuth, (req, res) => {
+  res.json({ message: `Welcome Back,${req.user.username}` });
+});
 
 app.use(function (req, res, next) {
   let err = new Error("Not Found");
@@ -26,6 +30,6 @@ app.use(function (req, res, next) {
 
 app.use(errorHandler);
 
-app.listen(port,()=>{
-    console.log(`server started at : http://localhost:5000/`)
-})
+app.listen(port, () => {
+  console.log(`server started at : http://localhost:5000/`);
+});

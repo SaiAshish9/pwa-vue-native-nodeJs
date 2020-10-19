@@ -1,8 +1,13 @@
 require("dotenv").config();
-const express = require("express");
-const db = require("../models");
-const router = express.Router(),
-  jwt = require("jsonwebtoken");
+const express = require("express"),
+  db = require("../models"),
+  router = express.Router(),
+  jwt = require("jsonwebtoken"),
+  requireAuth = require("../middlewares/requireAuth");
+
+router.get("/req.user", requireAuth, (req, res) => {
+  res.status(200).json(req.user);
+});
 
 router.post("/register", async (req, res) => {
   try {

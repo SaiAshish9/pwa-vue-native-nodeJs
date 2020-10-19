@@ -12,6 +12,8 @@ mongoose.connect(process.env.MONGO_URL, {
 
 const models = {
   user: require("./User"),
+  products: require("./Product"),
+  orders: require("./Order")
 };
 
 module.exports.models = models;
